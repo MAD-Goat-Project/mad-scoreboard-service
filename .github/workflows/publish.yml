@@ -10,5 +10,5 @@ jobs:
     uses: MAD-Goat-Project/github-actions-workflows/.github/workflows/publish-docker.yml@main
     secrets: inherit
     with:
-      HAS_NPMRC: true
+      has_npmrc: true
 
