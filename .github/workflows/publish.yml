@@ -8,3 +8,6 @@ on:
 jobs:
   build-and-push-image:
     uses: MAD-Goat-Project/github-actions-workflows/.github/workflows/publish-docker.yml@main
+    with:
+      secrets: inherit
+    
