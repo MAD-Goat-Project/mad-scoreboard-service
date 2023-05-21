@@ -1,15 +1,14 @@
 version: '3.8'
 services:
   db:
-    image: postgres:14.1-alpine
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    image: mongo:6.0
     ports:
-      - '5433:5432'
+      - 27017:27017
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - ./data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
 
   api:
     build: .
