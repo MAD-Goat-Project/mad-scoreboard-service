@@ -7,6 +7,8 @@ import {
   Param,
   Patch,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -16,6 +18,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @UsePipes(ValidationPipe)
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
@@ -52,6 +55,7 @@ export class UsersController {
 
   @Get('/generate/:factor')
   generate(@Param('factor') factor: string) {
-    return this.usersService.generate(factor);
+    const name = this.usersService.generate(factor);
+    return { name };
   }
 }
