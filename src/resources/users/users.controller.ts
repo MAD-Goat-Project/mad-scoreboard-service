@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -7,12 +8,14 @@ import {
   Param,
   Patch,
   Post,
+  UnauthorizedException,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthenticatedUser } from 'nest-keycloak-connect';
 
 @Controller('users')
 export class UsersController {
@@ -20,7 +23,24 @@ export class UsersController {
 
   @UsePipes(ValidationPipe)
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  async create(
+    @Body() createUserDto: CreateUserDto,
+    @AuthenticatedUser() user: any,
+  ) {
+    if (user.sub !== createUserDto.clientId) {
+      throw new UnauthorizedException(
+        'Not allowed to create a user for another client',
+      );
+    }
+
+    const client = await this.usersService.findByClientID(
+      createUserDto.clientId,
+    );
+    if (client) {
+      throw new BadRequestException(
+        `Client with id ${createUserDto.clientId} already exists`,
+      );
+    }
     return this.usersService.create(createUserDto);
   }
 
