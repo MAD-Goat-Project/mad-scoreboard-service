@@ -38,4 +38,4 @@ lerna-debug.log*
 .npmrc
 
 # data files from mongodb
-!/data/
+data/
