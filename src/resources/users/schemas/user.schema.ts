@@ -1,5 +1,6 @@
 import { HydratedDocument } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Points } from '../../points/schemas/points.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -12,7 +13,10 @@ export class User {
   clientId: string;
 
   @Prop()
-  points: number;
+  totalPoints: number;
+
+  @Prop()
+  points: Points[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

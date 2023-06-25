@@ -1,0 +1,1 @@
+export const RMQ_NAME = 'MAD_GOAT_LESSON_SERVICE';

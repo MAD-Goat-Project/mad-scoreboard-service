@@ -12,7 +12,8 @@ import {
 import { KeycloakConfigService } from './config/keycloak-config.service';
 import { AppConfigModule } from './config/app-config.module';
 import { APP_GUARD } from '@nestjs/core';
-import { MongoProviderModule } from './providers/mongo.provider.module';
+import { MongoProviderModule } from './providers/mongo/mongo.provider.module';
+import { PointsModule } from './resources/points/points.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { MongoProviderModule } from './providers/mongo.provider.module';
       useExisting: KeycloakConfigService,
       imports: [AppConfigModule],
     }),
+    PointsModule,
   ],
   controllers: [AppController],
   providers: [
