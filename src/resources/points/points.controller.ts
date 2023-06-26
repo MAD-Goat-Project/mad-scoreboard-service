@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { PointsService } from './points.service';
 import { Ctx, EventPattern, Payload, RmqContext } from '@nestjs/microservices';
 
@@ -11,6 +11,7 @@ export class PointsController {
     @Payload() data: { assessmentId: number; userId: string },
     @Ctx() context: RmqContext,
   ) {
+    Logger.log(`Message Received: ${JSON.stringify(data)}`, 'PointsController');
     this.pointsService.updatePoints(data);
   }
 }

@@ -10,6 +10,12 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
+  app.enableCors();
+
+  await app.listen(port).then(() => {
+    Logger.log(`Listening on port ${port}`, 'Main');
+  });
+
   await app.connectMicroservice({
     transport: Transport.RMQ,
     options: {
@@ -18,13 +24,8 @@ async function bootstrap() {
     },
     queueOptions: { durable: configService.get('RMQ_PRODUCER_QUEUE_DURABLE') },
   });
-
-  app.enableCors();
   app.startAllMicroservices().then(() => {
-    Logger.log('Microservice is listening');
-  });
-  await app.listen(port).then(() => {
-    Logger.log(`Listening on port ${port}`);
+    Logger.log('Microservice is listening', 'Main');
   });
 }
 
