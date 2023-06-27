@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Points } from './schemas/points.schema';
@@ -13,9 +13,14 @@ export class PointsService {
 
   // TODO: Improve types
   updatePoints(data: { assessmentId: number; userId: string }) {
-    this.userModel.updateOne(
-      { clientId: data.userId },
-      { $inc: { totalPoints: 10 } },
-    );
+    this.userModel
+      .updateOne(
+        { clientId: data.userId },
+        { $inc: { totalPoints: 10 } },
+        { upsert: true },
+      )
+      .then((res) =>
+        Logger.log(`Updated points for user ${data.userId}`, 'PointsService'),
+      );
   }
 }
