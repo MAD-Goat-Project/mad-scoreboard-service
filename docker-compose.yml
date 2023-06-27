@@ -14,19 +14,21 @@ services:
     build: .
     restart: always
     ports:
-      - '3000:3000'
-    environment:
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=mad
-    depends_on:
-      - db
+      - '3009:3000'
+    env_file:
+      - .env
+    #depends_on:
+    #  - db
     volumes:
       - .:/app
       - /app/node_modules
+    networks:
+      - mad-network
 
 volumes:
   db:
     driver: local
+
+networks:
+  mad-network:
+    name: mad-network
