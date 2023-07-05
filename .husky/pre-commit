@@ -3,5 +3,5 @@
 
 
 yarn run lint
-#yarn run test
+yarn run test
 yarn run build
