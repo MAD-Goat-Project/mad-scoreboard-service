@@ -9,6 +9,6 @@ jobs:
   build-and-push-image:
     uses: MAD-Goat-Project/github-actions-workflows/.github/workflows/publish-docker.yml@main
     with:
-      has_npmrc: true
+      has-npmrc: true
     secrets: inherit
 
