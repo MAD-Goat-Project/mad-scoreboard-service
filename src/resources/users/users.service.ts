@@ -25,7 +25,7 @@ export class UsersService {
 
   async findByClientID(clientId: string) {
     const client = await this.userModel.findOne({ clientId }).exec();
-    if (client && client.name.length > 0) {
+    if (client && client.name?.length > 0) {
       return client;
     }
     return null;
