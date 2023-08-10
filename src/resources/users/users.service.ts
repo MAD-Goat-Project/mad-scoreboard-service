@@ -24,11 +24,7 @@ export class UsersService {
   }
 
   async findByClientID(clientId: string) {
-    const client = await this.userModel.findOne({ clientId }).exec();
-    if (client && client.name?.length > 0) {
-      return client;
-    }
-    return null;
+    return this.userModel.findOne({ clientId }).exec();
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -25,6 +24,7 @@ import {
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  // TODO: If the CreateUserDTO has extra fields, they should be removed
   @UsePipes(ValidationPipe)
   @Post()
   async create(
@@ -40,10 +40,10 @@ export class UsersController {
     const client = await this.usersService.findByClientID(
       createUserDto.clientId,
     );
+
     if (client) {
-      throw new BadRequestException(
-        `Client with id ${createUserDto.clientId} already exists`,
-      );
+      delete createUserDto.totalPoints;
+      return this.usersService.update(client.id, createUserDto);
     }
     return this.usersService.create(createUserDto);
   }
