@@ -1,7 +1,7 @@
 import { IsNumber, Length, Max, Min } from 'class-validator';
 
 export class CreateUserDto {
-  @Length(1, 20)
+  @Length(1, 100)
   name: string;
 
   /**
