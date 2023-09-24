@@ -86,5 +86,5 @@ var fs=require("fs"),stream=fs.createWriteStream("pwned.txt",{flags:"w"});const 
 
 [codecov]: https://codecov.io/gh/MAD-Goat-Project/mad-scoreboard-service
 
-[codecov-badge]: https://codecov.io/gh/MAD-Goat-Project/mad-scoreboard-service/graph/badge.svg?token=48RIIR4CKN
+[codecov-badge]: https://codecov.io/gh/MAD-Goat-Project/mad-scoreboard-service/graph/badge.svg?token=2AVIP9VNY4
 
